@@ -105,6 +105,8 @@ task CramToBamTask {
     memory: machine_mem_size + " GB"
     disks: "local-disk " + disk_size + " HDD"
     preemptible: preemptible_tries
+    cpu: "8"
+    runtime_minutes: 360
   }
     
   #Outputs a BAM and BAI with the same sample name
@@ -137,12 +139,14 @@ task ValidateSamFile {
   #Run time attributes:
   #Use a docker with the picard.jar. Set this up as a workspace attribute.
   #Read more about return codes here: https://github.com/broadinstitute/cromwell#continueonreturncode
-		runtime {
+	runtime {
     docker: docker_image
     memory: machine_mem_size + " GB"
     disks: "local-disk " + disk_size + " HDD"
     preemptible: preemptible_tries
     continueOnReturnCode: [0,1]
+    cpu: "2"
+    runtime_minutes: 180
   }
   #A text file is generated that will list errors or warnings that apply. 
   output {
